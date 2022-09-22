@@ -5,20 +5,50 @@
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <!-- Extras includes support for additional model formats (like gltf 2.0)-->
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <!-- My code -->
+  <script>
+    var scene = document.querySelector('a-scene');
+    var isAnimating = true;
+
+    console.log("Script working");
+    AFRAME.registerComponent('marker-test', {
+      schema: {
+        message: {type: 'string', default: 'Initiate marker test'}},
+      init: function() {
+        console.log("Registered");
+        const bot = document.querySelector('#bot'); 
+        this.el.addEventListener('click', () => {
+        
+          bot.setAttribute("animation-mixer","clip: none");
+          console.log("Click Registered. Stop animation");
+
+        });
+  }});
+  
+  addEventListener('click', () => {
+        
+    if (isAnimating) {
+        bot.setAttribute("animation-mixer","clip: none");
+        isAnimating = false;
+    } else {
+      bot.setAttribute("animation-mixer","clip: Take 001; loop: repeat" )
+      isAnimating = true;
+    }
+        console.log("Click Registered. Toggle animation");
+
+  });
+      
+  </script>
   <body style="margin : 0px; overflow: hidden;">
     <a-scene embedded arjs>
       <a-marker preset="hiro">
-        <!-- we use cors proxy to avoid cross-origin problems -->
-        <!--
-          ⚠️⚠️⚠️
-          https://arjs-cors-proxy.herokuapp.com/ is now offline, Heroku has dismissed all his free plans from November 2022.
-          You need to host your own proxy and use it instead. The proxy is based on CORS Anywhere (see https://github.com/Rob--W/cors-anywhere).
-          ⚠️⚠️⚠️
-        -->
-        <a-entity
+        <!-- "Mech Drone" (https://skfb.ly/LMro) by Willy Decarpentrie is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/). -->
+        <a-entity marker-test
+          id="bot"
           position="0 0 0"
-          scale="0.25 0.25 0.25"
-          gltf-model="http://127.0.0.1:8080/https://raw.githubusercontent.com/aconnolly2/XR-Assignment1/main/assets/fighter.gltf";
+          scale="2 2 2"
+          animation-mixer="clip: Take 001; loop: repeat"
+          gltf-model="https://raw.githubusercontent.com/aconnolly2/XR-Assignment1/main/assets/mech_drone/scene.gltf";
         ></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
