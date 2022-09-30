@@ -13,7 +13,8 @@
     console.log("Script working");
     AFRAME.registerComponent('marker-test', {
       schema: {
-        message: {type: 'string', default: 'Initiate marker test'}},
+        message: {type: 'string', default: 'Initiate marker test'}
+      },
       init: function() {
         console.log("Registered");
         const bot = document.querySelector('#bot'); 
@@ -23,7 +24,14 @@
           console.log("Click Registered. Stop animation");
 
         });
-  }});
+      },
+      update: function() {
+      },
+      tick: function(time, timeDelta) {
+        const bot = document.querySelector('#bot'); 
+        console.log('marker pos: ', bot.object3D.position);
+      }
+  });
   
   addEventListener('click', () => {
         
