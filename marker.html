@@ -36,10 +36,10 @@
   addEventListener('click', () => {
         
     if (isAnimating) {
-        bot.setAttribute("animation-mixer","clip: none");
+        bot.setAttribute("animation-mixer","clip: Wave; loop: none");
         isAnimating = false;
     } else {
-      bot.setAttribute("animation-mixer","clip: Take 001; loop: repeat" )
+      bot.setAttribute("animation-mixer","clip: Idle; loop: repeat" )
       isAnimating = true;
     }
         console.log("Click Registered. Toggle animation");
@@ -54,9 +54,9 @@
         <a-entity marker-test
           id="bot"
           position="0 0 0"
-          scale="2 2 2"
-          animation-mixer="clip: Take 001; loop: repeat"
-          gltf-model="https://raw.githubusercontent.com/aconnolly2/XR-Assignment1/main/assets/mech_drone/scene.gltf";
+          scale="1 1 1"
+          animation-mixer="clip: Idle; loop: repeat"
+          gltf-model="https://raw.githubusercontent.com/aconnolly2/XR-Assignment1/main/assets/AWSBot.gltf";
         ></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
