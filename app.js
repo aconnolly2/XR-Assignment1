@@ -1,3 +1,7 @@
+// Server setup adapted from the following tutorial:
+// https://levelup.gitconnected.com/set-up-and-run-a-simple-node-server-project-38b403a3dc09
+// All other code by August Connolly for UCD COMP47930 Fall 2022
+
 // Listen on a specific host via the HOST environment variable
 var host = process.env.HOST || '127.0.0.1';
 // Listen on a specific port via the PORT environment variable
