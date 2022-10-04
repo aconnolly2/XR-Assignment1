@@ -15,6 +15,7 @@ https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
   <script>
     var scene = document.querySelector('a-scene');
     var isAnimating = true;
+    var isIdle = true;
 
     console.log("Script working");
     AFRAME.registerComponent('marker-test', {
@@ -23,29 +24,38 @@ https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
       },
       init: function() {
         console.log("Registered");
-        const bot = document.querySelector('#bot'); 
-        this.el.addEventListener('click', () => {
-        
-          bot.setAttribute("animation-mixer","clip: none");
-          console.log("Click Registered. Stop animation");
-
+        const bot = document.querySelector('#bot');
+        this.el.addEventListener('animation-finished', (action, direction) => {
+          console.log("Animation finished " + action);
+          
         });
+        this.el.addEventListener('animation-loop', (action, loopDelta) => {
+          console.log("Animation looped " + action + " " + loopDelta);
+          bot.setAttribute("animation-mixer","clip: Idle; loop: repeat; crossFadeDuration: 0.25" );
+          isAnimating = true;
+          isIdle = true;
+        });
+        //this.el.addEventListener('click', () => {
+        //
+        //  bot.setAttribute("animation-mixer","clip: none");
+        //  console.log("Click Registered. Stop animation");
+        //});
       },
       update: function() {
       },
       tick: function(time, timeDelta) {
-        const bot = document.querySelector('#bot'); 
-        console.log('marker pos: ', bot.object3D.position);
+        //const bot = document.querySelector('#bot'); 
       }
   });
   
   addEventListener('click', () => {
         
     if (isAnimating) {
-        bot.setAttribute("animation-mixer","clip: Wave; loop: none");
+        bot.setAttribute("animation-mixer","clip: Wave; loop: repeat; crossFadeDuration: 0.25");
         isAnimating = false;
+        isIdle = false;
     } else {
-      bot.setAttribute("animation-mixer","clip: Idle; loop: repeat" )
+      bot.setAttribute("animation-mixer","clip: Idle; loop: repeat; crossFadeDuration: 0.25" );
       isAnimating = true;
     }
         console.log("Click Registered. Toggle animation");
