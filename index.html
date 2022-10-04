@@ -10,12 +10,11 @@ https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
   <!-- we import arjs version without NFT but with marker + location based support -->
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <!-- Extras includes support for additional model formats (like gltf 2.0)-->
-  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
   <!-- My code -->
   <script>
     var scene = document.querySelector('a-scene');
     var isAnimating = true;
-    var isIdle = true;
 
     console.log("Script working");
     AFRAME.registerComponent('marker-test', {
@@ -23,50 +22,31 @@ https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
         message: {type: 'string', default: 'Initiate marker test'}
       },
       init: function() {
-        console.log("Registered");
-        const bot = document.querySelector('#bot');
-        this.el.addEventListener('animation-finished', (action, direction) => {
-          console.log("Animation finished " + action);
-          
-        });
+        const bot = document.querySelector('#bot');        
+
         this.el.addEventListener('animation-loop', (action, loopDelta) => {
           console.log("Animation looped " + action + " " + loopDelta);
-          bot.setAttribute("animation-mixer","clip: Idle; loop: repeat; crossFadeDuration: 0.25" );
-          isAnimating = true;
-          isIdle = true;
+          if (bot.getAttribute("animation-mixer").clip == "Wave") {
+            bot.setAttribute("animation-mixer","clip: Idle; loop: repeat; crossFadeDuration: 0.25" );
+            isAnimating = true;
+          }
         });
-        //this.el.addEventListener('click', () => {
-        //
-        //  bot.setAttribute("animation-mixer","clip: none");
-        //  console.log("Click Registered. Stop animation");
-        //});
-      },
-      update: function() {
-      },
-      tick: function(time, timeDelta) {
-        //const bot = document.querySelector('#bot'); 
       }
   });
   
   addEventListener('click', () => {
         
     if (isAnimating) {
-        bot.setAttribute("animation-mixer","clip: Wave; loop: repeat; crossFadeDuration: 0.25");
-        isAnimating = false;
-        isIdle = false;
-    } else {
-      bot.setAttribute("animation-mixer","clip: Idle; loop: repeat; crossFadeDuration: 0.25" );
-      isAnimating = true;
-    }
-        console.log("Click Registered. Toggle animation");
+      bot.setAttribute("animation-mixer","clip: Wave; loop: repeat; crossFadeDuration: 0.25");
 
+      isAnimating = false;
+    }
   });
       
   </script>
   <body style="margin : 0px; overflow: hidden;">
     <a-scene embedded arjs>
       <a-marker preset="hiro">
-        <!-- "Mech Drone" (https://skfb.ly/LMro) by Willy Decarpentrie is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/). -->
         <a-entity marker-test
           id="bot"
           position="0 0 0"
