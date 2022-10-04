@@ -1,7 +1,14 @@
 <!-- Code primarily adapted from the following:
+The AR.js documents that got me started:
 https://ar-js-org.github.io/AR.js-Docs/
+The AFrame Component Guide:
 https://aframe.io/docs/1.3.0/introduction/writing-a-component.html
+AFrame Extras that helped me handle animation:
 https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
+This fantastic demo of using animations using aframe extras (though mislead me deeply with the deprecated startFrame option that would have been super useful...):
+https://github.com/rexraptor08/animation-controls
+And this one inspired me to use getAttribute to nab the clip name in my conditional:
+https://stackoverflow.com/questions/63027478/correct-way-to-call-animation-through-and-if-statement-a-frame-animation-mixer
 -->
 
 <!DOCTYPE html>
@@ -10,13 +17,12 @@ https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
   <!-- we import arjs version without NFT but with marker + location based support -->
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <!-- Extras includes support for additional model formats (like gltf 2.0)-->
-  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   <!-- My code -->
   <script>
     var scene = document.querySelector('a-scene');
     var isAnimating = true;
 
-    console.log("Script working");
     AFRAME.registerComponent('marker-test', {
       schema: {
         message: {type: 'string', default: 'Initiate marker test'}
@@ -25,7 +31,6 @@ https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
         const bot = document.querySelector('#bot');        
 
         this.el.addEventListener('animation-loop', (action, loopDelta) => {
-          console.log("Animation looped " + action + " " + loopDelta);
           if (bot.getAttribute("animation-mixer").clip == "Wave") {
             bot.setAttribute("animation-mixer","clip: Idle; loop: repeat; crossFadeDuration: 0.25" );
             isAnimating = true;
@@ -38,7 +43,6 @@ https://github.com/n5ro/aframe-extras/tree/master/src/loaders#animation
         
     if (isAnimating) {
       bot.setAttribute("animation-mixer","clip: Wave; loop: repeat; crossFadeDuration: 0.25");
-
       isAnimating = false;
     }
   });
