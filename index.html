@@ -23,6 +23,7 @@ https://stackoverflow.com/questions/63027478/correct-way-to-call-animation-throu
     var scene = document.querySelector('a-scene');
     var isAnimating = true;
 
+    // Registering our AFrame component so we can run code for animation mixing.
     AFRAME.registerComponent('marker-test', {
       schema: {
         message: {type: 'string', default: 'Initiate marker test'}
@@ -39,6 +40,7 @@ https://stackoverflow.com/questions/63027478/correct-way-to-call-animation-throu
       }
   });
   
+  // Our event listener that checks for any click interactions. Triggers our wave animation.
   addEventListener('click', () => {
         
     if (isAnimating) {
